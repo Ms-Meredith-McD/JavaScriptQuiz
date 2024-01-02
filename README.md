@@ -9,6 +9,7 @@ The goal of this Java Script Quiz is to demonstrate what I have learned about Ja
 3. If the user answers the question incorrectly, time is subtracted from the clock
 4. When all of the questions are answered or the timer reaches 0, the game is over
 5. When the game is over the user can save their initials and their score
+6. User also has the option to view stored high scores
 
 
 
