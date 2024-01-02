@@ -31,6 +31,15 @@ const allQuestions = [
     ]
 },
 {
+    q: "When was JavaScript invented?",
+    a: [
+    {text: "1987", correct: false },
+    {text: "1995", correct: true },
+    {text: "1999", correct: false },
+    {text: "2002", correct: false },
+    ]
+},
+{
     q: "What is an array?",
     a: [
     {text: "A list of data", correct: false },
@@ -39,3 +48,5 @@ const allQuestions = [
     {text: "A cool fish", correct: false },
     ]
 }]
+console.log(allQuestions)
+console.log(allQuestions[3])
