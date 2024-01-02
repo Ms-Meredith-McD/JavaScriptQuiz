@@ -50,3 +50,28 @@ const allQuestions = [
 }]
 console.log(allQuestions)
 console.log(allQuestions[3])
+
+function handleButtonClick(event){
+    console.log(event.target.getAttribute("data-correct"))
+    currentQuestion++
+    buildNextQuestion();
+}
+
+function buildNextQuestion(){
+    const currentQuestionObj = allQuestions[currentQuestion]
+    const questionText = currentQuestionObj.q
+
+    const pTag = document.createElement("p");
+    pTag.textContent = questionText
+    viewport.appendChild(pTag)
+
+    const buttons = currentQuestionObj.a.map( function(obj){
+        const btn = document.createElement("button");
+        btn.textContent = obj.text
+        btn.setAttribute("data-correct", obj.correct)
+        btn.addEventListener("click", handleButtonClick)
+        viewport.appendChild(btn)
+    })
+}
+
+buildNextQuestion();
