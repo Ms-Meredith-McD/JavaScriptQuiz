@@ -1,3 +1,8 @@
+const startButton = document.getElementById('start');
+startButton.addEventListener('click', function(){
+    startTimer();
+})
+
 const header = document.querySelector('header');
 
 const viewport = document.querySelector('#viewport');
@@ -57,13 +62,11 @@ const allQuestions = [
 function startButtonClick(event) {
     const startText = document.createElement("p");
     startText.textContent = 'Try to answer the following JavaScript related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!'
-    const startButton = document.createElement("button")
+    const startButton = document.getElementById('start');
     header.appendChild(startText);
-    startButton.textContent = 'Start'
-    header.appendChild(startButton);
-    startButton.addEventListener('click', function () {
-        startTimer()
+    startButton.addEventListener('click', function(){   
         buildNextQuestion()
+        startButton.remove()
         header.innerHTML = ''
     });
 }
