@@ -2,6 +2,9 @@ const header = document.querySelector('header');
 
 const viewport = document.querySelector('#viewport');
 
+const final = document.querySelector
+('#final');
+
 let currentQuestion = 0;
 
 const allQuestions = [
@@ -65,7 +68,7 @@ function startButtonClick(event) {
 }
 
 function handleButtonClick(event) {
-    console.log(event.target.getAttribute("data-correct"))
+    console.log(event.target.getAttribute("guess"))
     if (currentQuestion < allQuestions.length) {
         const answers = document.getElementById("viewport");
         console.log(answers)
@@ -92,7 +95,7 @@ function buildNextQuestion() {
     const buttons = currentQuestionObj.a.map(function (obj) {
         const btn = document.createElement("button");
         btn.textContent = obj.text
-        btn.setAttribute("data-correct", obj.correct)
+        btn.setAttribute("guess", obj.correct)
         btn.addEventListener("click", handleButtonClick)
         viewport.appendChild(btn)
     })
