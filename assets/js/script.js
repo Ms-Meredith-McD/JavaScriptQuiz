@@ -68,7 +68,7 @@ function startButtonClick(event) {
 }
 
 function handleButtonClick(event) {
-    console.log(event.target.getAttribute("guess"))
+    console.log(event.target.getAttribute("correctAnswer"))
     if (currentQuestion < allQuestions.length) {
         const answers = document.getElementById("viewport");
         console.log(answers)
@@ -77,7 +77,8 @@ function handleButtonClick(event) {
         buildNextQuestion()
     }
     else { 
-        viewport.innerHTML ='';
+        viewport.innerHTML =''
+        winner()
 }
 }
     //create element and append an element
@@ -95,9 +96,15 @@ function buildNextQuestion() {
     const buttons = currentQuestionObj.a.map(function (obj) {
         const btn = document.createElement("button");
         btn.textContent = obj.text
-        btn.setAttribute("guess", obj.correct)
+        btn.setAttribute("correctAnswer", obj.correct)
         btn.addEventListener("click", handleButtonClick)
         viewport.appendChild(btn)
     })
+}
+
+function winner(){
+    const winnerText = document.createElement("p");
+    winnerText.textContent = 'Congratulations!'
+    finalWinner.appendChild(winnerText)
 }
 startButtonClick();
