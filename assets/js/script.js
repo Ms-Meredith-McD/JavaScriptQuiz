@@ -77,7 +77,7 @@ function handleButtonClick(event) {
         viewport.innerHTML ='';
 }
 }
-    // clear viewport - create element and append an element, not use OK
+    //create element and append an element
 
 function buildNextQuestion() {
     const currentQuestionObj = allQuestions[currentQuestion]
