@@ -79,13 +79,15 @@ function handleButtonClick(event) {
          // clear viewport
         viewport.innerHTML = ''
         buildNextQuestion()
+//wrong answer?
+        // subtract ten seconds
     }
     else { 
         viewport.innerHTML =''
         winner()
 }
 }
-    //create element and append an element
+// run out of time?
 
 function startTimer() {
     let counter = 0;
