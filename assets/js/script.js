@@ -1,3 +1,18 @@
+let counter = 0;
+
+const interval = setInterval(()=> {
+    // check the page every second for completion of questions
+    console.log('Questions complete?');
+
+    counter++;
+
+    if (counter >= 60) {
+        // stop the interval after 60 seconds
+        clearInterval(interval);
+        console.log('Out of Time! Game Over!')
+    }
+}, 1000);
+
 const header = document.querySelector('header');
 
 const viewport = document.querySelector('#viewport');
