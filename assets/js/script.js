@@ -1,10 +1,8 @@
 const header = document.querySelector('header');
 
+const viewport = document.querySelector('#viewport');
 
-
-const viewport = document.querySelector('#viewport')
-
-let currentQuestion = 0
+let currentQuestion = 0;
 
 const allQuestions = [
     {
@@ -52,8 +50,6 @@ const allQuestions = [
             { text: "A cool fish", correct: false },
         ]
     }]
-console.log(allQuestions)
-console.log(allQuestions[3])
 
 function startButtonClick(event) {
     const startText = document.createElement("p");
@@ -62,29 +58,32 @@ function startButtonClick(event) {
     header.appendChild(startText);
     startButton.textContent = 'Start'
     header.appendChild(startButton);
-    startButton.addEventListener('click', function(){
+    startButton.addEventListener('click', function () {
         buildNextQuestion()
         header.innerHTML = ''
-    });      
+    });
 }
 
 function handleButtonClick(event) {
     console.log(event.target.getAttribute("data-correct"))
     if (currentQuestion < allQuestions.length) {
-        // clear viewport
+        const answers = document.getElementById("viewport");
+        console.log(answers)
+         // clear viewport
+        viewport.innerHTML = ''
         buildNextQuestion()
-        
-    
+    }
+    else { 
+        viewport.innerHTML ='';
 }
-    else {console.log ("Game Over!")}
-    // clear viewport - create element and append an element, not use Game Over!
-};
+}
+    // clear viewport - create element and append an element, not use OK
 
 function buildNextQuestion() {
     const currentQuestionObj = allQuestions[currentQuestion]
     const questionText = currentQuestionObj.q
     currentQuestion++
-    
+
 
     const pTag = document.createElement("p");
     pTag.textContent = questionText
