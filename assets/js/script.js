@@ -12,6 +12,12 @@ const final = document.querySelector
 
 let currentQuestion = 0;
 
+let interval;
+let totalQuestionsAnswered = 0;
+
+
+
+
 const allQuestions = [
     {
         q: "What is JavaScript?",
@@ -23,7 +29,7 @@ const allQuestions = [
         ]
     },
     {
-        q: "In what order is JavaScript executed?",
+        q: "In what order is JavaScript normally executed?",
         a: [
             { text: "Right to left", correct: false },
             { text: "Descending numerically", correct: false },
@@ -64,12 +70,15 @@ function startButtonClick(event) {
     startText.textContent = 'Try to answer the following JavaScript related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!'
     const startButton = document.getElementById('start');
     header.appendChild(startText);
-    startButton.addEventListener('click', function(){   
-        buildNextQuestion()
-        startButton.remove()
-        header.innerHTML = ''
-    });
+    
 }
+
+startButton.addEventListener('click', function(){   
+    buildNextQuestion()
+    startButton.remove()
+    header.innerHTML = ''
+    startTimer()
+});
 
 function handleButtonClick(event) {
     console.log(event.target.getAttribute("correctAnswer"))
@@ -92,11 +101,17 @@ function handleButtonClick(event) {
 function startTimer() {
     let counter = 0;
 
-    const interval = setInterval(()=> {
+    interval = setInterval(()=> {
     // check the page every second for completion of questions
     console.log('Questions complete?');
 
     counter++;
+
+    if( totalQuestionsAnswered === allQuestions.length ){
+        clearInterval(interval)
+        endTheGame(counter)
+        // stop the timer and call some function that ends the game
+    }
 
     if (counter >= 60) {
         // stop the interval after 60 seconds
@@ -104,6 +119,11 @@ function startTimer() {
         console.log('Out of Time! Game Over!')
     }
 }, 1000);
+}
+
+
+function endTheGame(counter){
+    // determine winner or loser 
 }
 
 function buildNextQuestion() {
@@ -130,4 +150,5 @@ function winner(){
     winnerText.textContent = 'Congratulations!'
     finalWinner.appendChild(winnerText)
 }
+
 startButtonClick();
