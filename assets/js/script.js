@@ -43,36 +43,36 @@ const allQuestions = [
         ],
         c: "Top to bottom"
     },
-    // {
-    //     q: "What punctuation ends a line of JavaScript?",
-    //     a: [
-    //         { text: " : " },
-    //         { text: " ; " },
-    //         { text: " ! " },
-    //         { text: " , " },
-    //     ],
-    //     c: " ; "
-    // },
-    // {
-    //     q: "When was JavaScript invented?",
-    //     a: [
-    //         { text: "1987" },
-    //         { text: "1995" },
-    //         { text: "1999" },
-    //         { text: "2002" },
-    //     ],
-    //     c: "1995"
-    // },
-    // {
-    //     q: "What is an array?",
-    //     a: [
-    //         { text: "A list of data" },
-    //         { text: "A list of variables" },
-    //         { text: "A way to store multiple values with a single variable" },
-    //         { text: "A cool fish" },
-    //     ],
-    //     c: "A way to store multiple values with a single variable"
-    // }
+    {
+        q: "What punctuation ends a line of JavaScript?",
+        a: [
+            { text: " : " },
+            { text: " ; " },
+            { text: " ! " },
+            { text: " , " },
+        ],
+        c: " ; "
+    },
+    {
+        q: "When was JavaScript invented?",
+        a: [
+            { text: "1987" },
+            { text: "1995" },
+            { text: "1999" },
+            { text: "2002" },
+        ],
+        c: "1995"
+    },
+    {
+        q: "What is an array?",
+        a: [
+            { text: "A list of data" },
+            { text: "A list of variables" },
+            { text: "A way to store multiple values with a single variable" },
+            { text: "A cool fish" },
+        ],
+        c: "A way to store multiple values with a single variable"
+    }
 ]
 console.log('Number of Questions: ' + allQuestions.length)
 function startButtonClick(event) {
@@ -101,43 +101,29 @@ function handleButtonClick(event) {
 }
 
 function startTimer() {
-    // let counter = 0;
     // returning a function tells javascript to not progress beyond where the function is called
 
     interval = setInterval(() => {
-        if( gameOver ){
+        if (gameOver) {
             clearInterval(interval)
         } else {
-        // check the page every second for completion of questions
+            // check the page every second for completion of questions
             counter++;
             console.log('counter: ' + counter);
             console.log(totalQuestionsAnswered + "|" + allQuestions.length)
-            if ( totalQuestionsAnswered === allQuestions.length ) {
+            if (totalQuestionsAnswered === allQuestions.length) {
                 gameOver = true
                 // stop the timer and call some function that ends the game
-                // clearInterval(interval)
                 console.log('intervals: ' + interval)
                 console.log('timer counter: ' + counter)
                 clearInterval(interval)
                 return endTheGame(true)
             } else {
                 // stop the interval after 50 seconds
-                if (counter >= 10) {
+                if (counter >= 50) {
                     gameOver = true
                     clearInterval(interval);
                     return endTheGame(false)
-                    /*
-                    function countDown(num) {
-                        for (var i = num; i > 0; i--) {
-                            console.log(i);
-                            if (i === 1) {
-                                break;
-                            }
-                        }
-                        console.log("Counter has reached 50 - Out of Time");
-                    }
-                    */
-                    
                 }
             }
         }
@@ -147,36 +133,34 @@ function startTimer() {
 function endTheGame(isWinner) {
     const gameOver = document.getElementById("gameOver");
     gameOver.textContent = 'Game Over!'
-    if( isWinner ) winner()
-    //gameOver.appendChild(loserText)
+    if (isWinner) winner()
 }
 
 function buildNextQuestion() {
-if (currentQuestion < allQuestions.length){
-    const currentQuestionObj = allQuestions[currentQuestion]
-    const questionText = currentQuestionObj.q
-    currentQuestion++
+    if (currentQuestion < allQuestions.length) {
+        const currentQuestionObj = allQuestions[currentQuestion]
+        const questionText = currentQuestionObj.q
+        currentQuestion++
 
 
-    const pTag = document.createElement("p");
-    pTag.textContent = questionText
-    viewport.appendChild(pTag)
+        const pTag = document.createElement("p");
+        pTag.textContent = questionText
+        viewport.appendChild(pTag)
 
-    const buttons = currentQuestionObj.a.map(function (obj) {
-        const btn = document.createElement("button");
-        btn.textContent = obj.text
-        btn.setAttribute("correctAnswer", obj.correct)
-        btn.addEventListener("click", handleButtonClick)
-        viewport.appendChild(btn)
-    })
-}
+        const buttons = currentQuestionObj.a.map(function (obj) {
+            const btn = document.createElement("button");
+            btn.textContent = obj.text
+            btn.setAttribute("correctAnswer", obj.correct)
+            btn.addEventListener("click", handleButtonClick)
+            viewport.appendChild(btn)
+        })
+    }
 }
 
 function winner() {
     console.log("winner funnction")
-    const winnerText = document.getElementById(gameOver);
+    const winnerText = document.getElementById('gameOver');
     winnerText.textContent = 'Congratulations!'
-    gameOver.appendChild(winnerText)
 
     let inputContainer = document.getElementById("initials");
     let inputField = document.createElement("input");
@@ -194,7 +178,7 @@ function winner() {
     submitButton.addEventListener("click", function () {
         let init = inputField.value;
         let final = score;
-        
+
         let data = {
             initials: init,
             score: final
@@ -222,9 +206,9 @@ function checkAnswer(guess) {
             buildNextQuestion();
         }, 1000);
     } else if (totalQuestionsAnswered === allQuestions.length) {
-            winner()
-            // with an input and a button so user can input their initials
-            
+        winner()
+        // with an input and a button so user can input their initials
+
     } else {
         // else answer is false - display "Wrong" - proceed to next question
         const incorrectText = document.createElement('p');
@@ -243,20 +227,21 @@ function checkAnswer(guess) {
         }, 1000);
     }
 }
-displayScoresButton.addEventListener('click', function() {
+displayScoresButton.addEventListener('click', function () {
+    document.querySelector('header').innerHTML = ''
     const storedScores = localStorage.getItem('scoreData');
     if (storedScores) {
         const scores = JSON.parse(storedScores);
         console.log(scores)
         const displayScores = document.createElement('p');
-        displayScores.textContent = scores;
-        winners.appendChild(displayScores);
+        displayScores.textContent = `${scores.initials}-${scores.score}`;
         console.log('Stored Scores: ' + scores);
     } else {
         const displayScores = document.createElement('p');
         displayScores.textContent = 'No high scores found';
-        winners.appendChild(displayScores);
     }
 })
 
+// a button to clear the screen after reviewing the high scores or ending the game and going back to the beginning of the game
+// function startOver();
 startButtonClick();

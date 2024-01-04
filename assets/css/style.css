@@ -1,0 +1,45 @@
+h1 {
+    color: rgb(202, 105, 48);
+    width: 75%;
+    margin-left: 30px;
+}
+
+button {
+    margin: 30px;
+}
+
+.choiceBtn {
+    width: 300px;
+    background-color: bisque;
+    padding: 5px;
+    /*border-width: 5px; */
+    border: solid 1px burlywood;
+    margin: 5px;
+}
+
+li {
+    list-style-type: none;
+}
+
+span {
+    position: absolute;
+    top: 50px;
+    right: 100px;
+}
+
+div {
+    color: red;
+    font-size: 125%;
+}
+
+/* The user's cursor is positioned over the element */
+.choiceBtn:hover {
+    background-color: #CA9D22;
+    color: #000;
+    cursor: pointer;
+}
+
+/* The user is actively pressing down on the element */
+.choiceBtn:active {
+    box-shadow: 0 0 10px #000 inset;
+}
