@@ -16,6 +16,7 @@ let interval;
 let totalQuestionsAnswered = 0;
 let score = 0;
 let counter = 0;
+let gameOver = false
 
 const yes = document.getElementById('correct');
 const no = document.getElementById('incorrect');
@@ -42,36 +43,36 @@ const allQuestions = [
         ],
         c: "Top to bottom"
     },
-    {
-        q: "What punctuation ends a line of JavaScript?",
-        a: [
-            { text: " : " },
-            { text: " ; " },
-            { text: " ! " },
-            { text: " , " },
-        ],
-        c: " ; "
-    },
-    {
-        q: "When was JavaScript invented?",
-        a: [
-            { text: "1987" },
-            { text: "1995" },
-            { text: "1999" },
-            { text: "2002" },
-        ],
-        c: "1995"
-    },
-    {
-        q: "What is an array?",
-        a: [
-            { text: "A list of data" },
-            { text: "A list of variables" },
-            { text: "A way to store multiple values with a single variable" },
-            { text: "A cool fish" },
-        ],
-        c: "A way to store multiple values with a single variable"
-    }
+    // {
+    //     q: "What punctuation ends a line of JavaScript?",
+    //     a: [
+    //         { text: " : " },
+    //         { text: " ; " },
+    //         { text: " ! " },
+    //         { text: " , " },
+    //     ],
+    //     c: " ; "
+    // },
+    // {
+    //     q: "When was JavaScript invented?",
+    //     a: [
+    //         { text: "1987" },
+    //         { text: "1995" },
+    //         { text: "1999" },
+    //         { text: "2002" },
+    //     ],
+    //     c: "1995"
+    // },
+    // {
+    //     q: "What is an array?",
+    //     a: [
+    //         { text: "A list of data" },
+    //         { text: "A list of variables" },
+    //         { text: "A way to store multiple values with a single variable" },
+    //         { text: "A cool fish" },
+    //     ],
+    //     c: "A way to store multiple values with a single variable"
+    // }
 ]
 console.log('Number of Questions: ' + allQuestions.length)
 function startButtonClick(event) {
@@ -79,7 +80,7 @@ function startButtonClick(event) {
     startText.textContent = 'Try to answer the following JavaScript related questions within the time limit. Keep in mind that incorrect answers will penalize your time by five seconds!'
     const startButton = document.getElementById('start');
     header.appendChild(startText);
-
+    gameOver = false;
 }
 
 startButton.addEventListener('click', function () {
@@ -101,42 +102,53 @@ function handleButtonClick(event) {
 
 function startTimer() {
     // let counter = 0;
+    // returning a function tells javascript to not progress beyond where the function is called
 
     interval = setInterval(() => {
+        if( gameOver ){
+            clearInterval(interval)
+        } else {
         // check the page every second for completion of questions
-        counter++;
-        console.log('counter: ' + counter);
-        if (totalQuestionsAnswered === allQuestions.length) {
-            // stop the timer and call some function that ends the game
-            // clearInterval(interval)
-            console.log('intervals: ' + interval)
-            console.log('timer counter: ' + counter)
-            function endTheGame() {
-                const loserText = document.getElementById(gameOver);
-                loserText.textContent = 'Game Over!'
-                gameOver.appendChild(loserText)
-            }
-
-        }
-        // stop the interval after 50 seconds
-        if (counter = 50) {
-            // clearInterval(interval);
-            function countDown(num) {
-                for (var i = num; i > 0; i--) {
-                    console.log(i);
-                    if (i === 1) {
-                        break;
+            counter++;
+            console.log('counter: ' + counter);
+            console.log(totalQuestionsAnswered + "|" + allQuestions.length)
+            if ( totalQuestionsAnswered === allQuestions.length ) {
+                gameOver = true
+                // stop the timer and call some function that ends the game
+                // clearInterval(interval)
+                console.log('intervals: ' + interval)
+                console.log('timer counter: ' + counter)
+                clearInterval(interval)
+                return endTheGame(true)
+            } else {
+                // stop the interval after 50 seconds
+                if (counter >= 10) {
+                    gameOver = true
+                    clearInterval(interval);
+                    return endTheGame(false)
+                    /*
+                    function countDown(num) {
+                        for (var i = num; i > 0; i--) {
+                            console.log(i);
+                            if (i === 1) {
+                                break;
+                            }
+                        }
+                        console.log("Counter has reached 50 - Out of Time");
                     }
+                    */
+                    
                 }
-                console.log("Counter has reached 50 - Out of Time");
-            }
-            function endTheGame() {
-                const loserText = document.getElementById(gameOver);
-                loserText.textContent = 'Game Over!'
-                gameOver.appendChild(loserText)
             }
         }
     }, 1000);
+}
+
+function endTheGame(isWinner) {
+    const gameOver = document.getElementById("gameOver");
+    gameOver.textContent = 'Game Over!'
+    if( isWinner ) winner()
+    //gameOver.appendChild(loserText)
 }
 
 function buildNextQuestion() {
@@ -159,6 +171,38 @@ if (currentQuestion < allQuestions.length){
     })
 }
 }
+
+function winner() {
+    console.log("winner funnction")
+    const winnerText = document.getElementById(gameOver);
+    winnerText.textContent = 'Congratulations!'
+    gameOver.appendChild(winnerText)
+
+    let inputContainer = document.getElementById("initials");
+    let inputField = document.createElement("input");
+    inputField.setAttribute("type", "text");
+    inputField.setAttribute("placeholder", "Enter your initials");
+
+    let submitButton = document.createElement("button");
+    submitButton.textContent = "Submit";
+
+    inputContainer.appendChild(inputField);
+    inputContainer.appendChild(submitButton);
+    console.log()
+    console.log('score: ' + score)
+
+    submitButton.addEventListener("click", function () {
+        let init = inputField.value;
+        let final = score;
+        
+        let data = {
+            initials: init,
+            score: final
+        };
+        localStorage.setItem("scoreData", JSON.stringify(data));
+    });
+}
+
 function checkAnswer(guess) {
     // if answer is true - add to score - display "Correct"
     console.log(allQuestions[currentQuestion - 1].c)
@@ -177,37 +221,10 @@ function checkAnswer(guess) {
         setTimeout(() => {
             buildNextQuestion();
         }, 1000);
-    } else if (totalQuestionsAnswered === 5) {
-            function winner() {
-                const winnerText = document.getElementById(gameOver);
-                winnerText.textContent = 'Congratulations!'
-                gameOver.appendChild(winnerText)
-            }
+    } else if (totalQuestionsAnswered === allQuestions.length) {
+            winner()
             // with an input and a button so user can input their initials
-            let inputContainer = document.getElementById("initials");
-    
-            let inputField = document.createElement("input");
-            inputField.setAttribute("type", "text");
-            inputField.setAttribute("placeholder", "Enter your initials");
-    
-            let submitButton = document.createElement("button");
-            submitButton.textContent = "Submit";
-    
-            inputContainer.appendChild(inputField);
-            inputContainer.appendChild(submitButton);
-            console.log()
-            console.log('score: ' + score)
-    
-            submitButton.addEventListener("click", function () {
-                let init = inputField.value;
-                let final = score;
-    
-                let data = {
-                    initials: init,
-                    score: final
-                };
-                localStorage.setItem("scoreData", JSON.stringify(data));
-            });
+            
     } else {
         // else answer is false - display "Wrong" - proceed to next question
         const incorrectText = document.createElement('p');
@@ -230,6 +247,7 @@ displayScoresButton.addEventListener('click', function() {
     const storedScores = localStorage.getItem('scoreData');
     if (storedScores) {
         const scores = JSON.parse(storedScores);
+        console.log(scores)
         const displayScores = document.createElement('p');
         displayScores.textContent = scores;
         winners.appendChild(displayScores);
