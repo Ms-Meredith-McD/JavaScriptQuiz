@@ -23,50 +23,50 @@ const allQuestions = [
     {
         q: "What is JavaScript?",
         a: [
-            { text: "A language", correct: true },
-            { text: "An application", correct: false },
-            { text: "A font", correct: false },
-            { text: "A style", correct: false },
+            { text: "A language"},
+            { text: "An application"},
+            { text: "A font"},
+            { text: "A style"},
         ],
         c: "A language"
     },
     {
         q: "In what order is JavaScript normally executed?",
         a: [
-            { text: "Right to left", correct: false },
-            { text: "Descending numerically", correct: false },
-            { text: "Ascending numerically", correct: false },
-            { text: "Top to bottom", correct: true },
+            { text: "Right to left"},
+            { text: "Descending numerically"},
+            { text: "Ascending numerically"},
+            { text: "Top to bottom"},
         ],
         c: "Top to bottom"
     },
     {
         q: "What punctuation ends a line of JavaScript?",
         a: [
-            { text: " : ", correct: false },
-            { text: " ; ", correct: true },
-            { text: " ! ", correct: false },
-            { text: " , ", correct: false },
+            { text: " : "},
+            { text: " ; "},
+            { text: " ! "},
+            { text: " , "},
         ],
         c: " ; "
     },
     {
         q: "When was JavaScript invented?",
         a: [
-            { text: "1987", correct: false },
-            { text: "1995", correct: true },
-            { text: "1999", correct: false },
-            { text: "2002", correct: false },
+            { text: "1987"},
+            { text: "1995"},
+            { text: "1999"},
+            { text: "2002"},
         ],
         c: "1995"
     },
     {
         q: "What is an array?",
         a: [
-            { text: "A list of data", correct: false },
-            { text: "A list of variables", correct: false },
-            { text: "A way to store multiple values with a single variable", correct: true },
-            { text: "A cool fish", correct: false },
+            { text: "A list of data"},
+            { text: "A list of variables"},
+            { text: "A way to store multiple values with a single variable"},
+            { text: "A cool fish"},
         ],
         c: "A way to store multiple values with a single variable"
     }]
