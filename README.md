@@ -15,7 +15,7 @@ The goal of this Java Script Quiz is to demonstrate what I have learned about Ja
 
 
 ## Screenshot
-
+![Quiz Screenshot](./assets/images/image.png)
 
 
 ## Link
