@@ -176,7 +176,7 @@ function winner() {
     console.log()
     console.log('score: ' + score)
 
-    const init = inputField.value;
+    const init = inputField.innerText;
     const final = score
     let data = {
         initials: init,
@@ -186,7 +186,7 @@ function winner() {
 
     submitButton.addEventListener("click", function () {
         if (localStorage.getItem('scoreData')) {
-            const existingLocalStorage = JSON.parse(scoreData) || [];
+            const existingLocalStorage = JSON.parse(scoreData);
             existingLocalStorage.push(newScore);
             const updatedDataString = JSON.stringify(existingLocalStorage);
             localStorage.setItem('scoreData', updatedDataString);
