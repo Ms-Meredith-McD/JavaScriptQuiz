@@ -23,54 +23,55 @@ const allQuestions = [
     {
         q: "What is JavaScript?",
         a: [
-            { text: "A language"},
-            { text: "An application"},
-            { text: "A font"},
-            { text: "A style"},
+            { text: "A language" },
+            { text: "An application" },
+            { text: "A font" },
+            { text: "A style" },
         ],
         c: "A language"
     },
     {
         q: "In what order is JavaScript normally executed?",
         a: [
-            { text: "Right to left"},
-            { text: "Descending numerically"},
-            { text: "Ascending numerically"},
-            { text: "Top to bottom"},
+            { text: "Right to left" },
+            { text: "Descending numerically" },
+            { text: "Ascending numerically" },
+            { text: "Top to bottom" },
         ],
         c: "Top to bottom"
     },
     {
         q: "What punctuation ends a line of JavaScript?",
         a: [
-            { text: " : "},
-            { text: " ; "},
-            { text: " ! "},
-            { text: " , "},
+            { text: " : " },
+            { text: " ; " },
+            { text: " ! " },
+            { text: " , " },
         ],
         c: " ; "
     },
     {
         q: "When was JavaScript invented?",
         a: [
-            { text: "1987"},
-            { text: "1995"},
-            { text: "1999"},
-            { text: "2002"},
+            { text: "1987" },
+            { text: "1995" },
+            { text: "1999" },
+            { text: "2002" },
         ],
         c: "1995"
     },
     {
         q: "What is an array?",
         a: [
-            { text: "A list of data"},
-            { text: "A list of variables"},
-            { text: "A way to store multiple values with a single variable"},
-            { text: "A cool fish"},
+            { text: "A list of data" },
+            { text: "A list of variables" },
+            { text: "A way to store multiple values with a single variable" },
+            { text: "A cool fish" },
         ],
         c: "A way to store multiple values with a single variable"
-    }]
-
+    }
+]
+console.log('Number of Questions: ' + allQuestions.length)
 function startButtonClick(event) {
     const startText = document.createElement("p");
     startText.textContent = 'Try to answer the following JavaScript related questions within the time limit. Keep in mind that incorrect answers will penalize your time by five seconds!'
@@ -87,10 +88,9 @@ startButton.addEventListener('click', function () {
 });
 
 function handleButtonClick(event) {
-    console.log(event.target.getAttribute("correctAnswer"))
-    if (currentQuestion < allQuestions.length) {
+    if (currentQuestion <= allQuestions.length) {
         const answers = document.getElementById("viewport");
-        console.log(answers)
+        console.log('answers: ' + answers)
         // clear viewport
         viewport.innerHTML = ''
         checkAnswer(this.textContent)
@@ -102,14 +102,18 @@ function startTimer() {
 
     interval = setInterval(() => {
         // check the page every second for completion of questions
-        console.log('Questions complete?');
-
         counter++;
-
+        console.log('counter: ' + counter);
         if (totalQuestionsAnswered === allQuestions.length) {
             // stop the timer and call some function that ends the game
-            clearInterval(interval)
-            endTheGame(counter)
+            // clearInterval(interval)
+            console.log('intervals: ' + interval)
+            console.log('timer counter: ' + counter)
+            function endTheGame() {
+                const loserText = document.getElementById(gameOver);
+                loserText.textContent = 'Game Over!'
+                gameOver.appendChild(loserText)
+            }
 
         }
         // stop the interval after 50 seconds
@@ -122,27 +126,19 @@ function startTimer() {
                         break;
                     }
                 }
-                console.log("Out of time");
+                console.log("Counter has reached 50 - Out of Time");
             }
-            endTheGame()
+            function endTheGame() {
+                const loserText = document.getElementById(gameOver);
+                loserText.textContent = 'Game Over!'
+                gameOver.appendChild(loserText)
+            }
         }
     }, 1000);
 }
 
-
-function endTheGame(counter) {
-    // if the user wins - what to display and storing the score "You Win!" 
-    if (totalQuestionsAnswered === 5) {
-        
-        // with an input and a button so user can input their initials
-        //  with button click save to local storage
-        // else the user loses - what do I want to display "Game Over"
-
-    }
-}
-
-
 function buildNextQuestion() {
+if (currentQuestion < allQuestions.length){
     const currentQuestionObj = allQuestions[currentQuestion]
     const questionText = currentQuestionObj.q
     currentQuestion++
@@ -160,9 +156,9 @@ function buildNextQuestion() {
         viewport.appendChild(btn)
     })
 }
+}
 function checkAnswer(guess) {
     // if answer is true - add to score - display "Correct"
-    console.log(guess)
     console.log(allQuestions[currentQuestion - 1].c)
     if (allQuestions[currentQuestion - 1].c === guess) {
         const correctText = document.createElement('p');
@@ -170,20 +166,54 @@ function checkAnswer(guess) {
         correct.appendChild(correctText);
         console.log('Correct!');
         score++;
-        console.log(score);
+        totalQuestionsAnswered++;
+        console.log('Total Questions Answered: ' + totalQuestionsAnswered)
+        console.log('Score: ' + score);
         setTimeout(() => {
             yes.innerText = '';
         }, 1000);
         setTimeout(() => {
             buildNextQuestion();
         }, 1000);
-
+    } else if (totalQuestionsAnswered === 5) {
+            function winner() {
+                const winnerText = document.getElementById(gameOver);
+                winnerText.textContent = 'Congratulations!'
+                gameOver.appendChild(winnerText)
+            }
+            // with an input and a button so user can input their initials
+            let inputContainer = document.getElementById("initials");
+    
+            let inputField = document.createElement("input");
+            inputField.setAttribute("type", "text");
+            inputField.setAttribute("placeholder", "Enter your initials");
+    
+            let submitButton = document.createElement("button");
+            submitButton.textContent = "Submit";
+    
+            inputContainer.appendChild(inputField);
+            inputContainer.appendChild(submitButton);
+            console.log()
+            console.log('score: ' + score)
+    
+            submitButton.addEventListener("click", function () {
+                let init = inputField.value;
+                let final = score;
+    
+                let data = {
+                    initials: init,
+                    score: final
+                };
+                localStorage.setItem("scoreData", JSON.stringify(data));
+            });
     } else {
         // else answer is false - display "Wrong" - proceed to next question
         const incorrectText = document.createElement('p');
         incorrectText.textContent = 'Wrong!';
         incorrect.appendChild(incorrectText);
         console.log('Wrong!');
+        totalQuestionsAnswered++;
+        console.log(totalQuestionsAnswered)
         counter = counter + 5
         console.log(counter)
         setTimeout(() => {
@@ -193,12 +223,6 @@ function checkAnswer(guess) {
             buildNextQuestion();
         }, 1000);
     }
-}
-
-function winner() {
-    const winnerText = document.createElement("p");
-    winnerText.textContent = 'Congratulations!'
-    finalWinner.appendChild(winnerText)
 }
 
 startButtonClick();
