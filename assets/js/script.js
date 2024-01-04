@@ -19,6 +19,8 @@ let counter = 0;
 
 const yes = document.getElementById('correct');
 const no = document.getElementById('incorrect');
+const displayScoresButton = document.getElementById('highscore');
+
 const allQuestions = [
     {
         q: "What is JavaScript?",
@@ -224,5 +226,19 @@ function checkAnswer(guess) {
         }, 1000);
     }
 }
+displayScoresButton.addEventListener('click', function() {
+    const storedScores = localStorage.getItem('scoreData');
+    if (storedScores) {
+        const scores = JSON.parse(storedScores);
+        const displayScores = document.createElement('p');
+        displayScores.textContent = scores;
+        winners.appendChild(displayScores);
+        console.log('Stored Scores: ' + scores);
+    } else {
+        const displayScores = document.createElement('p');
+        displayScores.textContent = 'No high scores found';
+        winners.appendChild(displayScores);
+    }
+})
 
 startButtonClick();
