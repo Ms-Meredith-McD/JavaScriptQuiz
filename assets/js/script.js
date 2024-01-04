@@ -22,6 +22,7 @@ const yes = document.getElementById('correct');
 const no = document.getElementById('incorrect');
 const displayScoresButton = document.getElementById('highscore');
 
+
 const allQuestions = [
     {
         q: "What is JavaScript?",
@@ -77,7 +78,7 @@ const allQuestions = [
 console.log('Number of Questions: ' + allQuestions.length)
 function startButtonClick(event) {
     const startText = document.createElement("p");
-    startText.textContent = 'Try to answer the following JavaScript related questions within the time limit. Keep in mind that incorrect answers will penalize your time by five seconds!'
+    startText.textContent = 'Try to answer the following JavaScript related questions within the time limit. Keep in mind that incorrect answers will penalize your time by three seconds!'
     const startButton = document.getElementById('start');
     header.appendChild(startText);
     gameOver = false;
@@ -86,7 +87,7 @@ function startButtonClick(event) {
 startButton.addEventListener('click', function () {
     buildNextQuestion()
     startButton.remove()
-    header.innerHTML = ''
+    // header.innerHTML = ''
     startTimer()
 });
 
@@ -158,7 +159,7 @@ function buildNextQuestion() {
 }
 
 function winner() {
-    console.log("winner funnction")
+    console.log("winner function")
     const winnerText = document.getElementById('gameOver');
     winnerText.textContent = 'Congratulations!'
 
@@ -175,16 +176,29 @@ function winner() {
     console.log()
     console.log('score: ' + score)
 
-    submitButton.addEventListener("click", function () {
-        let init = inputField.value;
-        let final = score;
+    const init = inputField.value;
+    const final = score
+    let data = {
+        initials: init,
+        score: final
+    };
+    localStorage.setItem("scoreData", JSON.stringify(data));
 
-        let data = {
-            initials: init,
-            score: final
-        };
-        localStorage.setItem("scoreData", JSON.stringify(data));
-    });
+    submitButton.addEventListener("click", function () {
+        if (localStorage.getItem('scoreData')) {
+            const existingLocalStorage = JSON.parse(scoreData) || [];
+            existingLocalStorage.push(newScore);
+            const updatedDataString = JSON.stringify(existingLocalStorage);
+            localStorage.setItem('scoreData', updatedDataString);
+
+        } else {
+            let data = {
+                initials: init,
+                score: final
+            };
+            localStorage.setItem("scoreData", JSON.stringify(data));
+        }
+    })
 }
 
 function checkAnswer(guess) {
@@ -217,7 +231,7 @@ function checkAnswer(guess) {
         console.log('Wrong!');
         totalQuestionsAnswered++;
         console.log(totalQuestionsAnswered)
-        counter = counter + 5
+        counter = counter + 3
         console.log(counter)
         setTimeout(() => {
             no.innerText = '';
@@ -228,17 +242,19 @@ function checkAnswer(guess) {
     }
 }
 displayScoresButton.addEventListener('click', function () {
-    document.querySelector('header').innerHTML = ''
+    // document.querySelector('header').innerHTML = ''
     const storedScores = localStorage.getItem('scoreData');
     if (storedScores) {
         const scores = JSON.parse(storedScores);
         console.log(scores)
         const displayScores = document.createElement('p');
         displayScores.textContent = `${scores.initials}-${scores.score}`;
+        displayScoresButton.appendChild(displayScores);
         console.log('Stored Scores: ' + scores);
     } else {
         const displayScores = document.createElement('p');
         displayScores.textContent = 'No high scores found';
+        displayScoresButton.appendChild(displayScores);
     }
 })
 

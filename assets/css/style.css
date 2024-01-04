@@ -1,5 +1,5 @@
-h1 {
-    color: rgb(202, 105, 48);
+/* h1 {
+    color: rgb(21, 36, 175);
     width: 75%;
     margin-left: 30px;
 }
@@ -13,10 +13,10 @@ button {
     background-color: bisque;
     padding: 5px;
     /*border-width: 5px; */
-    border: solid 1px burlywood;
+    /* border: solid 1px rgb(66, 3, 75);
     margin: 5px;
-}
-
+} */
+/* 
 li {
     list-style-type: none;
 }
@@ -28,18 +28,17 @@ span {
 }
 
 div {
-    color: red;
+    color: rgb(132, 0, 255);
     font-size: 125%;
-}
+} */
 
 /* The user's cursor is positioned over the element */
-.choiceBtn:hover {
-    background-color: #CA9D22;
+/* .choiceBtn:hover {
+    background-color: #c54bab;
     color: #000;
     cursor: pointer;
-}
+} */
 
 /* The user is actively pressing down on the element */
-.choiceBtn:active {
-    box-shadow: 0 0 10px #000 inset;
-}
+/* .choiceBtn:active {
+    box-shadow: 0 0 10px #000 inset; */
