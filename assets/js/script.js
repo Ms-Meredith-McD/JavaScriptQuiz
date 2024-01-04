@@ -15,6 +15,7 @@ let currentQuestion = 0;
 let interval;
 let totalQuestionsAnswered = 0;
 let score = 0;
+let counter = 0;
 
 const yes = document.getElementById('correct');
 const no = document.getElementById('incorrect');
@@ -72,7 +73,7 @@ const allQuestions = [
 
 function startButtonClick(event) {
     const startText = document.createElement("p");
-    startText.textContent = 'Try to answer the following JavaScript related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!'
+    startText.textContent = 'Try to answer the following JavaScript related questions within the time limit. Keep in mind that incorrect answers will penalize your time by five seconds!'
     const startButton = document.getElementById('start');
     header.appendChild(startText);
 
@@ -94,14 +95,10 @@ function handleButtonClick(event) {
         viewport.innerHTML = ''
         checkAnswer(this.textContent)
     }
-    else {
-        viewport.innerHTML = ''
-        winner()
-    }
 }
 
 function startTimer() {
-    let counter = 0;
+    // let counter = 0;
 
     interval = setInterval(() => {
         // check the page every second for completion of questions
@@ -110,15 +107,23 @@ function startTimer() {
         counter++;
 
         if (totalQuestionsAnswered === allQuestions.length) {
+            // stop the timer and call some function that ends the game
             clearInterval(interval)
             endTheGame(counter)
-            // stop the timer and call some function that ends the game
+
         }
-        // stop the interval after 60 seconds
-        if (counter >= 60) {
-            // go back to start page
-            clearInterval(interval);
-            console.log('out of time')
+        // stop the interval after 50 seconds
+        if (counter = 50) {
+            // clearInterval(interval);
+            function countDown(num) {
+                for (var i = num; i > 0; i--) {
+                    console.log(i);
+                    if (i === 1) {
+                        break;
+                    }
+                }
+                console.log("Out of time");
+            }
             endTheGame()
         }
     }, 1000);
@@ -127,10 +132,13 @@ function startTimer() {
 
 function endTheGame(counter) {
     // if the user wins - what to display and storing the score "You Win!" 
-    // with an input and a button so user can input their initials
-    //  with button click save to local storage
-    // else the user loses - what do I want to display "Game Over"
+    if (totalQuestionsAnswered === 5) {
+        
+        // with an input and a button so user can input their initials
+        //  with button click save to local storage
+        // else the user loses - what do I want to display "Game Over"
 
+    }
 }
 
 
@@ -176,6 +184,8 @@ function checkAnswer(guess) {
         incorrectText.textContent = 'Wrong!';
         incorrect.appendChild(incorrectText);
         console.log('Wrong!');
+        counter = counter + 5
+        console.log(counter)
         setTimeout(() => {
             no.innerText = '';
         }, 1000);
