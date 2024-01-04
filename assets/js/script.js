@@ -17,6 +17,7 @@ let totalQuestionsAnswered = 0;
 let score = 0;
 let counter = 0;
 let gameOver = false
+let scoreData;
 
 const yes = document.getElementById('correct');
 const no = document.getElementById('incorrect');
@@ -87,7 +88,6 @@ function startButtonClick(event) {
 startButton.addEventListener('click', function () {
     buildNextQuestion()
     startButton.remove()
-    // header.innerHTML = ''
     startTimer()
 });
 
