@@ -16,8 +16,6 @@ let interval;
 let totalQuestionsAnswered = 0;
 let score = 0;
 
-let userChoice;
-
 const yes = document.getElementById('correct');
 const no = document.getElementById('incorrect');
 const allQuestions = [
@@ -94,9 +92,6 @@ function handleButtonClick(event) {
         console.log(answers)
         // clear viewport
         viewport.innerHTML = ''
-        // console.log(this)
-        // console.log(this.textContent)
-        // userChoice = this.textContent
         checkAnswer(this.textContent)
     }
     else {
@@ -121,7 +116,6 @@ function startTimer() {
         }
         // stop the interval after 60 seconds
         if (counter >= 60) {
-            // report game over due to time ending
             // go back to start page
             clearInterval(interval);
             console.log('out of time')
