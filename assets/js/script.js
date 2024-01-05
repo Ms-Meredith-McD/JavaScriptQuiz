@@ -27,7 +27,7 @@ const displayScoresButton = document.getElementById('highscore');
 const allQuestions = [
     {
         q: "What is JavaScript?",
-        a: [
+        a: [ 
             { text: "A language" },
             { text: "An application" },
             { text: "A font" },
@@ -44,36 +44,37 @@ const allQuestions = [
             { text: "Top to bottom" },
         ],
         c: "Top to bottom"
-    },
-    {
-        q: "What punctuation ends a line of JavaScript?",
-        a: [
-            { text: " : " },
-            { text: " ; " },
-            { text: " ! " },
-            { text: " , " },
-        ],
-        c: " ; "
-    },
-    {
-        q: "When was JavaScript invented?",
-        a: [
-            { text: "1987" },
-            { text: "1995" },
-            { text: "1999" },
-            { text: "2002" },
-        ],
-        c: "1995"
-    },
-    {
-        q: "What is an array?",
-        a: [
-            { text: "A list of data" },
-            { text: "A list of variables" },
-            { text: "A way to store multiple values with a single variable" },
-            { text: "A cool fish" },
-        ],
-        c: "A way to store multiple values with a single variable"
+        // },
+        // {
+        //     q: "What punctuation ends a line of JavaScript?",
+        //     a: [
+        //         { text: " : " },
+        //         { text: " ; " },
+        //         { text: " ! " },
+        //         { text: " , " },
+        //     ],
+        //     c: " ; "
+        // },
+        // {
+        //     q: "When was JavaScript invented?",
+        //     a: [
+        //         { text: "1987" },
+        //         { text: "1995" },
+        //         { text: "1999" },
+        //         { text: "2002" },
+        //     ],
+        //     c: "1995"
+        // },
+        // {
+        //     q: "What is an array?",
+        //     a: [
+        //         { text: "A list of data" },
+        //         { text: "A list of variables" },
+        //         { text: "A way to store multiple values with a single variable" },
+        //         { text: "A cool fish" },
+        //     ],
+        //     c: "A way to store multiple values with a single variable"
+        // }
     }
 ]
 console.log('Number of Questions: ' + allQuestions.length)
@@ -175,31 +176,23 @@ function winner() {
     inputContainer.appendChild(submitButton);
     console.log()
     console.log('score: ' + score)
+    console.log(inputField)
 
-    const init = inputField.innerText;
-    const final = score
-    let data = {
-        initials: init,
-        score: final
-    };
-    localStorage.setItem("scoreData", JSON.stringify(data));
+    // let data = {
+    //     initials: inputField.value,
+    //     score: score
+    // };
 
+    // localStorage.setItem("scoreData", JSON.stringify(data));
     submitButton.addEventListener("click", function () {
-        if (localStorage.getItem('scoreData')) {
-            const existingLocalStorage = JSON.parse(scoreData);
-            existingLocalStorage.push(newScore);
-            const updatedDataString = JSON.stringify(existingLocalStorage);
-            localStorage.setItem('scoreData', updatedDataString);
-
-        } else {
             let data = {
-                initials: init,
-                score: final
+                initials: inputField.value,
+                score: score
             };
             localStorage.setItem("scoreData", JSON.stringify(data));
         }
-    })
-}
+    )}
+
 
 function checkAnswer(guess) {
     // if answer is true - add to score - display "Correct"
