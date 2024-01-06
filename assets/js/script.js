@@ -18,16 +18,16 @@ let score = 0;
 let counter = 0;
 let gameOver = false
 let scoreData;
+let isScoreDisplayed = false;
 
 const yes = document.getElementById('correct');
 const no = document.getElementById('incorrect');
 const displayScoresButton = document.getElementById('highscore');
 
-
 const allQuestions = [
     {
         q: "What is JavaScript?",
-        a: [ 
+        a: [
             { text: "A language" },
             { text: "An application" },
             { text: "A font" },
@@ -44,42 +44,43 @@ const allQuestions = [
             { text: "Top to bottom" },
         ],
         c: "Top to bottom"
-        // },
-        // {
-        //     q: "What punctuation ends a line of JavaScript?",
-        //     a: [
-        //         { text: " : " },
-        //         { text: " ; " },
-        //         { text: " ! " },
-        //         { text: " , " },
-        //     ],
-        //     c: " ; "
-        // },
-        // {
-        //     q: "When was JavaScript invented?",
-        //     a: [
-        //         { text: "1987" },
-        //         { text: "1995" },
-        //         { text: "1999" },
-        //         { text: "2002" },
-        //     ],
-        //     c: "1995"
-        // },
-        // {
-        //     q: "What is an array?",
-        //     a: [
-        //         { text: "A list of data" },
-        //         { text: "A list of variables" },
-        //         { text: "A way to store multiple values with a single variable" },
-        //         { text: "A cool fish" },
-        //     ],
-        //     c: "A way to store multiple values with a single variable"
-        // }
+    },
+    {
+        q: "What punctuation ends a line of JavaScript?",
+        a: [
+            { text: " : " },
+            { text: " ; " },
+            { text: " ! " },
+            { text: " , " },
+        ],
+        c: " ; "
+    },
+    {
+        q: "When was JavaScript invented?",
+        a: [
+            { text: "1987" },
+            { text: "1995" },
+            { text: "1999" },
+            { text: "2002" },
+        ],
+        c: "1995"
+    },
+    {
+        q: "What is an array?",
+        a: [
+            { text: "A list of data" },
+            { text: "A list of variables" },
+            { text: "A way to store multiple values with a single variable" },
+            { text: "A cool fish" },
+        ],
+        c: "A way to store multiple values with a single variable"
     }
 ]
 console.log('Number of Questions: ' + allQuestions.length)
 function startButtonClick(event) {
+    const header = document.querySelector('header')
     const startText = document.createElement("p");
+    const currentHigh = document.getElementById('span')
     startText.textContent = 'Try to answer the following JavaScript related questions within the time limit. Keep in mind that incorrect answers will penalize your time by three seconds!'
     const startButton = document.getElementById('start');
     header.appendChild(startText);
@@ -90,6 +91,8 @@ startButton.addEventListener('click', function () {
     buildNextQuestion()
     startButton.remove()
     startTimer()
+    displayScoresButton.remove()
+
 });
 
 function handleButtonClick(event) {
@@ -178,20 +181,15 @@ function winner() {
     console.log('score: ' + score)
     console.log(inputField)
 
-    // let data = {
-    //     initials: inputField.value,
-    //     score: score
-    // };
-
-    // localStorage.setItem("scoreData", JSON.stringify(data));
     submitButton.addEventListener("click", function () {
-            let data = {
-                initials: inputField.value,
-                score: score
-            };
-            localStorage.setItem("scoreData", JSON.stringify(data));
-        }
-    )}
+        let data = {
+            initials: inputField.value,
+            score: score
+        };
+        localStorage.setItem("scoreData", JSON.stringify(data));
+    }
+    )
+}
 
 
 function checkAnswer(guess) {
@@ -234,23 +232,43 @@ function checkAnswer(guess) {
         }, 1000);
     }
 }
+
 displayScoresButton.addEventListener('click', function () {
-    // document.querySelector('header').innerHTML = ''
     const storedScores = localStorage.getItem('scoreData');
+
     if (storedScores) {
         const scores = JSON.parse(storedScores);
-        console.log(scores)
-        const displayScores = document.createElement('p');
-        displayScores.textContent = `${scores.initials}-${scores.score}`;
-        displayScoresButton.appendChild(displayScores);
+
+        // Check if the score is already displayed
+        if (!isScoreDisplayed) {
+            const displayScores = document.createElement('span');
+            displayScores.textContent = ` Highscore: ${scores.initials} ${scores.score}`;
+            displayScoresButton.parentNode.insertBefore(displayScores, displayScoresButton.nextSibling);
+
+            // Update the state to indicate that the score is displayed
+            isScoreDisplayed = true;
+        }
+
+        displayScoresButton.style.display = 'none';
         console.log('Stored Scores: ' + scores);
     } else {
-        const displayScores = document.createElement('p');
-        displayScores.textContent = 'No high scores found';
-        displayScoresButton.appendChild(displayScores);
+        const displayScores = document.createElement('span');
+        displayScoresButton.style.display = 'none';
+        displayScores.textContent = ' Highscores: No high scores found';
+        displayScoresButton.parentNode.insertBefore(displayScores, displayScoresButton.nextSibling);
     }
-})
+});
+// Create the button element
+var reloadButton = document.createElement('button');
+reloadButton.textContent = 'Reload';
 
-// a button to clear the screen after reviewing the high scores or ending the game and going back to the beginning of the game
-// function startOver();
+// Add event listener to the button
+reloadButton.addEventListener('click', function () {
+    // Reload the page
+    location.reload();
+});
+
+// Append the button to the document body or any other desired element
+document.getElementById('reload').appendChild(reloadButton);
+
 startButtonClick();
