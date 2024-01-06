@@ -16,7 +16,7 @@ No installation is needed to use this resource, simply follow the link to the we
 
 
 ## Screenshot
-![Quiz Screenshot](./assets/images/image.png)
+![Quiz Screenshot](./assets/images/image2.png)
 
 
 ## Link
