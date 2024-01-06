@@ -11,7 +11,8 @@ The goal of this Java Script Quiz is to demonstrate what I have learned about Ja
 5. When the game is over the user can save their initials and their score
 6. User also has the option to view stored high scores
 
-
+## Installation
+No installation is needed to use this resource, simply follow the link to the webpage
 
 
 ## Screenshot
