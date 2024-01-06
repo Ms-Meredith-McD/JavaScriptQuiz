@@ -15,11 +15,12 @@ let currentQuestion = 0;
 let interval;
 let totalQuestionsAnswered = 0;
 let score = 0;
-let counter = 0;
+let count = 0;
 let gameOver = false
 let scoreData;
 let isScoreDisplayed = false;
 
+const highscore = document.getElementById('highscore');
 const yes = document.getElementById('correct');
 const no = document.getElementById('incorrect');
 const displayScoresButton = document.getElementById('highscore');
@@ -98,7 +99,6 @@ startButton.addEventListener('click', function () {
 function handleButtonClick(event) {
     if (currentQuestion <= allQuestions.length) {
         const answers = document.getElementById("viewport");
-        console.log('answers: ' + answers)
         // clear viewport
         viewport.innerHTML = ''
         checkAnswer(this.textContent)
@@ -113,19 +113,17 @@ function startTimer() {
             clearInterval(interval)
         } else {
             // check the page every second for completion of questions
-            counter++;
-            console.log('counter: ' + counter);
+            count++;
+            console.log('counter: ' + count);
             console.log(totalQuestionsAnswered + "|" + allQuestions.length)
             if (totalQuestionsAnswered === allQuestions.length) {
                 gameOver = true
                 // stop the timer and call some function that ends the game
-                console.log('intervals: ' + interval)
-                console.log('timer counter: ' + counter)
                 clearInterval(interval)
                 return endTheGame(true)
             } else {
                 // stop the interval after 50 seconds
-                if (counter >= 50) {
+                if (count >= 50) {
                     gameOver = true
                     clearInterval(interval);
                     return endTheGame(false)
@@ -165,7 +163,7 @@ function buildNextQuestion() {
 function winner() {
     console.log("winner function")
     const winnerText = document.getElementById('gameOver');
-    winnerText.textContent = 'Congratulations!'
+    winnerText.textContent = 'Your score is  ' + score;
 
     let inputContainer = document.getElementById("initials");
     let inputField = document.createElement("input");
@@ -180,8 +178,8 @@ function winner() {
     console.log()
     console.log('score: ' + score)
     console.log(inputField)
-
-    submitButton.addEventListener("click", function () {
+    
+        submitButton.addEventListener("click", function () {
         let data = {
             initials: inputField.value,
             score: score
@@ -222,8 +220,8 @@ function checkAnswer(guess) {
         console.log('Wrong!');
         totalQuestionsAnswered++;
         console.log(totalQuestionsAnswered)
-        counter = counter + 3
-        console.log(counter)
+        count = count + 3
+        console.log(count)
         setTimeout(() => {
             no.innerText = '';
         }, 1000);

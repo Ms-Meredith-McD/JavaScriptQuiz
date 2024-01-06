@@ -1,45 +1,28 @@
-h1 {
-    color: rgb(21, 36, 175);
-    width: 75%;
-    margin-left: 30px;
+* {
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+body {
+    margin: 0;
+}
+
+header {
+    padding-left: 10px;
+    color:  black;
+    background-color:aliceblue;
+}
+
+button:hover {
+    box-shadow:inset 0px 0px 8px
+    rgb(65, 4, 163), 0 0 1.5px
+    rgba(65, 4, 163);
 }
 
 button {
-    margin: 30px;
-}
-
-.choiceBtn {
-    width: 300px;
-    background-color: bisque;
+    background-color:aquamarine;
     padding: 5px;
-    border-width: 5px;
-    border: solid 1px rgb(66, 3, 75);
-    margin: 5px;
-} 
-
-li {
-    list-style-type: none;
-}
-
-span {
-    position: absolute;
-    top: 50px;
-    right: 100px;
-}
-
-div {
-    color: rgb(132, 0, 255);
-    font-size: 125%;
-} 
-
-/* The user's cursor is positioned over the element */
-.choiceBtn:hover {
-    background-color: #c54bab;
-    color: #000;
-    cursor: pointer;
-}
-
-/* The user is actively pressing down on the element */
-.choiceBtn:active {
-    box-shadow: 0 0 10px #000 inset;
+    margin-left: 5px;
+    margin-top: 5px;
 }
