@@ -171,8 +171,6 @@ function buildNextQuestion() {
 function winner() {
     console.log("winner function")
     const winnerText = document.getElementById('gameOver');
-    // winnerText.textContent = 'Your score is  ' + score;
-
 
     let inputContainer = document.getElementById("initials");
     let inputField = document.createElement("input");
