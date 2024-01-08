@@ -15,10 +15,12 @@ let currentQuestion = 0;
 let interval;
 let totalQuestionsAnswered = 0;
 let score = 0;
-let count = 0;
+let count = 50;
 let gameOver = false
 let scoreData;
 let isScoreDisplayed = false;
+let timeEl = document.querySelector(".time");
+
 
 const highscore = document.getElementById('highscore');
 const yes = document.getElementById('correct');
@@ -107,23 +109,26 @@ function handleButtonClick(event) {
 
 function startTimer() {
     // returning a function tells javascript to not progress beyond where the function is called
-
     interval = setInterval(() => {
         if (gameOver) {
             clearInterval(interval)
         } else {
             // check the page every second for completion of questions
-            count++;
+            // count++;
+            count--;
             console.log('counter: ' + count);
             console.log(totalQuestionsAnswered + "|" + allQuestions.length)
+            timeEl.textContent = count + " seconds remaining";
             if (totalQuestionsAnswered === allQuestions.length) {
                 gameOver = true
                 // stop the timer and call some function that ends the game
                 clearInterval(interval)
                 return endTheGame(true)
             } else {
-                // stop the interval after 50 seconds
-                if (count >= 50) {
+                // stop the interval when count down from 50 to 0
+                if (count <= 0) {
+                    timeEl.textContent = "Time is up!";
+                    timeIsUp = true;
                     gameOver = true
                     clearInterval(interval);
                     return endTheGame(false)
@@ -140,7 +145,7 @@ function endTheGame(isWinner) {
 }
 
 function buildNextQuestion() {
-    if (currentQuestion < allQuestions.length) {
+    if (currentQuestion < allQuestions.length && count > 0) {
         const currentQuestionObj = allQuestions[currentQuestion]
         const questionText = currentQuestionObj.q
         currentQuestion++
@@ -157,14 +162,17 @@ function buildNextQuestion() {
             btn.addEventListener("click", handleButtonClick)
             viewport.appendChild(btn)
         })
-    }
-}
+    } else {
+    // we have reached the last question or the counter is 0
+    return endTheGame(false)
+    }}
+
 
 function winner() {
     console.log("winner function")
     const winnerText = document.getElementById('gameOver');
     // winnerText.textContent = 'Your score is  ' + score;
-   
+
 
     let inputContainer = document.getElementById("initials");
     let inputField = document.createElement("input");
@@ -179,8 +187,8 @@ function winner() {
     console.log()
     console.log('score: ' + score)
     console.log(inputField)
-    
-        submitButton.addEventListener("click", function () {
+
+    submitButton.addEventListener("click", function () {
         let data = {
             initials: inputField.value,
             score: score
@@ -189,7 +197,7 @@ function winner() {
         winnerText.textContent = 'Winner! ' + inputField.value + ' ' + score;
     }
     )
-    
+
 }
 
 
@@ -223,7 +231,7 @@ function checkAnswer(guess) {
         console.log('Wrong!');
         totalQuestionsAnswered++;
         console.log(totalQuestionsAnswered)
-        count = count + 3
+        count = count - 3
         console.log(count)
         setTimeout(() => {
             no.innerText = '';
